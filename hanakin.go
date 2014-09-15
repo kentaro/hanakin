@@ -25,7 +25,7 @@ func main() {
 
 	if m != 0 {
 		if m < 1 || m > 12 {
-			log.Fatalf("month must been between 1 and 12: %s", m)
+			log.Fatalf("month must be between 1 and 12: %s", m)
 		}
 	} else {
 		m = int(now.Month())
@@ -59,15 +59,15 @@ type month struct {
 	payday int
 }
 
-func NewMonth(number time.Month, y, p int) (m *month) {
-	m = &month{year: y, number: number, payday: p, days: make([]time.Time, 31)}
-	t := time.Date(y, number, 1, 0, 0, 0, 0, time.Local)
+func NewMonth(n time.Month, y, p int) (m *month) {
+	m = &month{year: y, number: n, payday: p, days: make([]time.Time, 31)}
+	t := time.Date(y, n, 1, 0, 0, 0, 0, time.Local)
 
 	for {
-		m.days[t.Day() - 1] = t
-		t = time.Date(y, number, t.Day()+1, 0, 0, 0, 0, time.Local)
+		m.days[t.Day()-1] = t
+		t = time.Date(y, n, t.Day()+1, 0, 0, 0, 0, time.Local)
 
-		if t.Month().String() != number.String() {
+		if t.Month().String() != n.String() {
 			break
 		}
 	}
