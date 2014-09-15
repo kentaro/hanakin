@@ -60,11 +60,11 @@ type month struct {
 }
 
 func NewMonth(n time.Month, y, p int) (m *month) {
-	m = &month{year: y, number: n, payday: p, days: make([]time.Time, 31)}
+	m = &month{year: y, number: n, payday: p}
 	t := time.Date(y, n, 1, 0, 0, 0, 0, time.Local)
 
 	for {
-		m.days[t.Day()-1] = t
+		m.days = append(m.days, t)
 		t = time.Date(y, n, t.Day()+1, 0, 0, 0, 0, time.Local)
 
 		if t.Month().String() != n.String() {
